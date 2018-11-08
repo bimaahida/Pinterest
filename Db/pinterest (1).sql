@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2018 at 04:23 AM
+-- Generation Time: Nov 08, 2018 at 08:41 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -35,6 +35,15 @@ CREATE TABLE `board` (
   `status` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `board`
+--
+
+INSERT INTO `board` (`id`, `nama_board`, `user_id`, `status`) VALUES
+(1, 'asdasdqwe', 1, 1),
+(2, 'asdasdasdasdasd', 1, 1),
+(3, 'asdasd', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +56,15 @@ CREATE TABLE `board_image` (
   `board_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `board_image`
+--
+
+INSERT INTO `board_image` (`id`, `date`, `board_id`, `image_id`) VALUES
+(1, '2018-11-08 14:04:42', 3, 50),
+(2, '2018-11-08 14:07:13', 2, 49),
+(3, '2018-11-08 14:07:13', 1, 58);
 
 -- --------------------------------------------------------
 
@@ -171,7 +189,6 @@ CREATE TABLE `search` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `nama` varchar(45) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
@@ -183,8 +200,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `nama`, `username`, `password`, `email`, `foto`, `status`, `date`) VALUES
-(1, 'Bima Ahida', 'lul', '2c0b3d4664350f2ff5a2ac539aeacf0e', 'lul@gmail.com', 'https://i.pinimg.com/564x/ab/94/a1/ab94a143397d6e6cddec9105020b9e6d.jpg', 1, '2018-11-01 20:41:21');
+INSERT INTO `user` (`id`, `nama`, `password`, `email`, `foto`, `status`, `date`) VALUES
+(1, 'Bima Ahida', '2c0b3d4664350f2ff5a2ac539aeacf0e', 'lul@gmail.com', 'https://i.pinimg.com/564x/ab/94/a1/ab94a143397d6e6cddec9105020b9e6d.jpg', 1, '2018-11-01 20:41:21');
 
 -- --------------------------------------------------------
 
@@ -275,13 +292,13 @@ ALTER TABLE `user_kategori`
 -- AUTO_INCREMENT for table `board`
 --
 ALTER TABLE `board`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `board_image`
 --
 ALTER TABLE `board_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `image`
