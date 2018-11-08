@@ -66,7 +66,7 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: auto;right: 10px;">
                     <a class="dropdown-item" href="#">Edit Seting</a>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" href="<?= base_url().'auth/logout'?>">Logout</a>
                   </div>
               <!-- <a class="nav-link" href="#"><i class="fas fa-ellipsis-h" style="font-size: 25px;"></i></a> -->
             </li>

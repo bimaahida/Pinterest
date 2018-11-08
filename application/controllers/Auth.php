@@ -34,6 +34,10 @@ class Auth extends CI_Controller
             redirect('auth','refresh');
         }
     }
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect('auth','refresh');
+    }
     public function profile()
     {
         $session_id = $this->session->userdata('logged_in')->id;
