@@ -28,6 +28,12 @@ class User_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+    function login($email,$passowrd){
+        $this->db->where('email', $email);
+        $this->db->where('password', $passowrd);
+        return $this->db->get($this->table)->row();
+    }
     
     // get total rows
     function total_rows($q = NULL) {

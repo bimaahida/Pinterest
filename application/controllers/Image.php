@@ -41,32 +41,16 @@ class Image extends CI_Controller
             redirect(site_url('image'));
         }
     }
-
-    public function create() 
-    {
-        $data = array(
-            'button' => 'Create',
-            'action' => site_url('image/create_action'),
-            'id' => set_value('id'),
-            'deskripsi' => set_value('deskripsi'),
-            'nama' => set_value('nama'),
-            'url' => set_value('url'),
-            'kategori_id' => set_value('kategori_id'),
-            'user_id' => set_value('user_id'),
-        );
-        $this->load->view('image/image_form', $data);
-    }
     
     public function create_action() 
     {
         if(empty($this->input->post('url-web',TRUE))){
-            $this->form_validation->set_rules('description-create', 'adreess', 'trim|required');
-            $this->form_validation->set_rules('name-create', 'adreess', 'trim|required');
-            // $this->form_validation->set_rules('imgInp', 'imgInp', 'trim|required');
+            $this->form_validation->set_rules('description-create', 'description-create', 'trim|required');
+            $this->form_validation->set_rules('name-create', 'name-create', 'trim|required');
             $this->form_validation->set_rules('website-create', 'website-create', 'trim|required');
             $this->form_validation->set_rules('kategori-create', 'kategori-create', 'trim|required');
             if ($this->form_validation->run() == FALSE) {
-                // redirect(site_url('image'));
+                redirect(site_url('image'));
             }else{
                 $config['upload_path']          = './assets/upload/';
                 $config['allowed_types']        = 'gif|jpg|png';
@@ -88,7 +72,7 @@ class Image extends CI_Controller
                         'website' => $this->input->post('website-create',TRUE),
                         'kategori_id' => $this->input->post('kategori-create',TRUE),
                         // 'user_id' => $this->session->userdata('auth'),
-                        'user_id' => '1',
+                        'user_id' => $this->session->userdata('logged_in')->id,
                     );
                     $this->Image_model->insert($data);
                     $this->session->set_flashdata('message', 'Create Record Success');
@@ -96,8 +80,8 @@ class Image extends CI_Controller
                 }
             }
         }else{
-            $this->form_validation->set_rules('url-deskripsi', 'adreess', 'trim|required');
-            $this->form_validation->set_rules('url-name', 'adreess', 'trim|required');
+            $this->form_validation->set_rules('url-deskripsi', 'url-deskripsi', 'trim|required');
+            $this->form_validation->set_rules('url-name', 'url-name', 'trim|required');
             $this->form_validation->set_rules('url-web', 'imgInp', 'trim|required');
             $this->form_validation->set_rules('url-website', 'website-create', 'trim|required');
             $this->form_validation->set_rules('url-kategori', 'kategori_id', 'trim|required');
@@ -112,7 +96,7 @@ class Image extends CI_Controller
                     'website' => $this->input->post('url-website',TRUE),
                     'kategori_id' => $this->input->post('url-kategori',TRUE),
                     // 'user_id' => $this->session->userdata('auth'),
-                    'user_id' => '1',
+                    'user_id' => $this->session->userdata('logged_in')->id,
                 );
                 $this->Image_model->insert($data);
                 $this->session->set_flashdata('message', 'Create Record Success');
@@ -121,44 +105,20 @@ class Image extends CI_Controller
         }
     }
     
-    public function update($id) 
+    public function update_action($id) 
     {
-        $row = $this->Image_model->get_by_id($id);
-
-        if ($row) {
-            $data = array(
-                'button' => 'Update',
-                'action' => site_url('image/update_action'),
-                'id' => set_value('id', $row->id),
-                'deskripsi' => set_value('deskripsi', $row->deskripsi),
-                'nama' => set_value('nama', $row->nama),
-                'url' => set_value('url', $row->url),
-                'kategori_id' => set_value('kategori_id', $row->kategori_id),
-                'user_id' => set_value('user_id', $row->user_id),
-            );
-            $this->load->view('image/image_form', $data);
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('image'));
-        }
-    }
-    
-    public function update_action() 
-    {
-        // $this->_rules();
-
+        $this->form_validation->set_rules('name-edit', 'name-edit', 'trim|required');
+        $this->form_validation->set_rules('description-edit', 'description-edit', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
-            $this->update($this->input->post('id', TRUE));
+            // redirect(site_url('image'));
+            var_dump($this->input->post('description-edit',TRUE));
         } else {
             $data = array(
-                'deskripsi' => $this->input->post('deskripsi',TRUE),
-                'nama' => $this->input->post('nama',TRUE),
-                'url' => $this->input->post('url',TRUE),
-                'kategori_id' => $this->input->post('kategori_id',TRUE),
-                'user_id' => $this->input->post('user_id',TRUE),
+                'deskripsi' => $this->input->post('description-edit',TRUE),
+                'website' => $this->input->post('website-edit',TRUE),
+                'nama' => $this->input->post('name-edit',TRUE),
 	        );
-
-            $this->Image_model->update($this->input->post('id', TRUE), $data);
+            $this->Image_model->update($id, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('image'));
         }
@@ -180,7 +140,7 @@ class Image extends CI_Controller
 
     public function komentar_action($image){
         // $user = $this->session->userdata('auth');
-        $user = '1';
+        $user = $this->session->userdata('logged_in')->id;
         $data = array(
             'komentar' => $this->input->post('commant-text',TRUE),
             'user_id' => $user,

@@ -56,7 +56,7 @@
               <a class="nav-link" href="#">Folowing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="https://i.pinimg.com/564x/1e/4b/34/1e4b34f36e658bfc8811782a31cdb5e3.jpg" class="logo rounded-circle" alt="Pinterest">Bima Ahida</a>
+              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="<?= $this->session->userdata('logged_in')->foto; ?>" class="logo rounded-circle" alt="Pinterest">Bima Ahida</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><i class="fas fa-bell" style="font-size: 25px;"></i></a>
@@ -91,20 +91,27 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
       <div class="modal-header">
-          <div class="modal-title">
-            <div class="dropdown show">
-              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Report</a>
-              </div>
+        <div class="modal-title">
+            <div class="row">
+                <div class="col-1">
+                    <a href="#" id="edit-button"><i class="fas fa-pen"></i></a>
+                </div>
+                <div class="col-1">
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#">Report</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </i></div>
+        </div>
 
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
           </button>
       </div>
       <div class="modal-body">
-          <div class="row">
+        <div class="row" id="detail">
             <div class="col-md-8">
                 <div class="center-block"><img id="image-gallery-image" class="img-fluid rounded" src=""></div>
             </div>
@@ -129,7 +136,33 @@
               <br>
               <div id="komentar-list"></div>
             </div>
-          </div>
+        </div>
+        <div class="row" id="edit-image">
+            <div class="col-12">
+                <form id="edit-action" action="" method="post">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name-edit" name="name-edit" placeholder="Add the name this Pin">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Website:</label>
+                        <input type="text" class="form-control" id="website-edit" name="website-edit" placeholder="Add the URL this Pin links to">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Description:</label>
+                        <textarea class="form-control form-control-xs" name="description-edit" id="description-edit" cols="70" rows="3" placeholder="Say more about this pin"></textarea>
+                    </div>
+                    <hr>
+                    <div class="float-left">
+                        <a href="" class="btn btn-primary" id="delete-image">Delete</a>
+                    </div>    
+                    <div class="float-right">
+                        <button type="button" id="cancel-edit" class="btn btn-light">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Done</button>
+                    </div>  
+                </form>
+            </div>
+        </div>
       </div>
   </div>
 </div>

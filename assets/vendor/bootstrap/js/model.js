@@ -1,9 +1,17 @@
 let modalId = $('#image-gallery');
 
-$(document)
-  .ready(function () {
+$(document).ready(function () {
 
     loadGallery(true, 'a.thumbnail');
+
+    $('#edit-button').click(function(){
+      $('#edit-image').show();
+      $('#detail').hide();
+    });
+    $('#cancel-edit').click(function(){
+      $('#edit-image').hide();
+      $('#detail').show();
+    })
 
     //This function disables buttons when needed
     function disableButtons(counter_max, counter_current) {
@@ -43,7 +51,9 @@ $(document)
         });
 
       function updateGallery(selector) {
-        $("#komentar-list").empty();
+        $('#detail').show();
+        $('#edit-image').hide();
+        $('#komentar-list').empty();
         $('#status').removeAttr('checked');
 
         let $sel = selector;
@@ -58,7 +68,7 @@ $(document)
           $.get("image/get_komentar/"+current_image, function(data) {
             data_parse = JSON.parse(data);
             data_parse.forEach(el => {
-              $("#komentar-list").append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span><a href='#'>Like </a></div></div><br>");
+              $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span><a href='#'>Like </a></div></div><br>");
             });
           }); 
         }
@@ -70,6 +80,13 @@ $(document)
         }else{
           $('#links-web').hide();
         }
+
+        $('#edit-action').attr('action', "image/update_action/"+$sel.data('imageid'));
+        $('#delete-image').attr('href', "image/delete/"+$sel.data('imageid'));
+        $("#name-edit").val($sel.data('title'));
+        $("#website-edit").val($sel.data('website'));
+        $("#description-edit").val($sel.data('description'));
+
 
         $('#image-gallery-title').text($sel.data('title'));
         $('#name-user').text($sel.data('user'));

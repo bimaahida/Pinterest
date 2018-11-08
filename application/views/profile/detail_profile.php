@@ -38,9 +38,15 @@
         </div>
         <?php foreach ($board_public as $key => $value) { ?>
           <div class="col-md-3" style="padding-top: 25px;padding-bottom: 25px;">
-            <a href="" class="d-flex justify-content-center border">
+            <a href="<?= base_url().'board/detail/'.$value['board']->id?>" class="d-flex justify-content-center border board-panel" style="text-decoration: none;">
               <figure class="figure">
-                <img src="<?php if(empty($value['image'])){ echo 'http://www.trustvets.com/images/NoImageAvailable.png';}else{echo $value['image']->url;} ?>" class="figure-img img-fluid rounded board-image" alt="<?= $value['board']->nama_board; ?>." style="width: 200px;height: 200px;">
+                <div class="row" style="padding-left: 28px;padding-top: 22px;">
+                  <div class="col-12">
+                    <?php for ($i=0; $i < 8 ; $i++) { ?>
+                      <img src="<?php if(empty($value['image'][$i])){ echo 'http://www.trustvets.com/images/NoImageAvailable.png';}else{echo $value['image'][$i]->url;} ?>" class="figure-img img-fluid rounded board-image" alt="<?= $value['board']->nama_board; ?>." style="width: 85px;height: 85px;">
+                    <?php } ?>
+                  </div>
+                </div>
                 <figcaption class="figure-caption text-center"><p class="font-weight-bold"><?= $value['board']->nama_board; ?>.</p></figcaption>
               </figure>
             </a>
@@ -68,9 +74,15 @@
             </div>
             <?php foreach ($board_private as $key => $value) { ?>
               <div class="col-md-3" style="padding-top: 25px;padding-bottom: 25px;">
-                <a href="" class="d-flex justify-content-center border">
+                <a href="<?= base_url().'board/detail/'.$value['board']->id?>" class="d-flex justify-content-center border board-panel" style="text-decoration: none;">
                   <figure class="figure">
-                    <img src="<?php if(empty($value['image'])){ echo 'http://www.trustvets.com/images/NoImageAvailable.png';}else{echo $value['image']->url;} ?>" class="figure-img img-fluid rounded board-image" alt="<?= $value['board']->nama_board; ?>." style="width: 200px;height: 200px;">
+                    <div class="row" style="padding-left: 28px;padding-top: 22px;">
+                      <div class="col-12">
+                        <?php for ($i=0; $i < 8 ; $i++) { ?>
+                          <img src="<?php if(empty($value['image'][$i])){ echo 'http://www.trustvets.com/images/NoImageAvailable.png';}else{echo $value['image'][$i]->url;} ?>" class="figure-img img-fluid rounded board-image" alt="<?= $value['board']->nama_board; ?>." style="width: 85px;height: 85px;">
+                        <?php } ?>
+                      </div>
+                    </div>
                     <figcaption class="figure-caption text-center"><p class="font-weight-bold"><?= $value['board']->nama_board; ?>.</p></figcaption>
                   </figure>
                 </a>
@@ -93,7 +105,7 @@
         </div>
         <?php foreach($pins as $val){?>
           <div class="mb-3 pics animation all 2">
-              <a class="thumbnail" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>" data-target="#image-gallery">
+              <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>" data-target="#image-gallery">
                   <img class="img-fluid rounded" src="<?php if(explode('/',$val->url)[0] == 'assets'){ echo base_url().$val->url;}else{ echo $val->url; };?>" alt="<?php if(!empty($val->nama)){echo $val->nama;} ?>">
               </a>
           </div>

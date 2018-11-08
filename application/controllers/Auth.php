@@ -18,12 +18,25 @@ class Auth extends CI_Controller
         $data = array(
             'image' => $this->Image_model->get_all(),
         );
-        $this->render['content']= $this->load->view('image/image_list', $data, TRUE);
-        $this->load->view('template', $this->render);
+        $this->load->view('login', $data);
     } 
+    public function loginAction(){
+        $email = $this->input->post('email',TRUE);
+        $password = md5($this->input->post('password',TRUE));
+
+        $data = $this->User_model->login($email,$password);
+        if($data){
+            $this->session->set_userdata('logged_in', $data);
+            redirect('image','refresh');
+        }else{
+            $message['invalid_user'] = 'invalid username or password';
+            $this->session->set_flashdata('error_message', $message);
+            redirect('auth','refresh');
+        }
+    }
     public function profile()
     {
-        $session_id = 1;
+        $session_id = $this->session->userdata('logged_in')->id;
         $board_private = array();
         $board_public = array();
 

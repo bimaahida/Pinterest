@@ -1,6 +1,11 @@
 a {
     color: #34495e;
 }
+.board-panel:hover{
+    /* background-color: #718093; */
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
 /* The switch - the box around the slider */
 .switch {
     position: relative;
