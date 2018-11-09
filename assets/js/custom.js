@@ -1,4 +1,5 @@
 $(document).ready( function() {
+
 	$(document).on('change', '.btn-file :file', function() {
 	var input = $(this),
 		label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -7,7 +8,7 @@ $(document).ready( function() {
 
 	$('#commant-text').keypress(function(e){
 		var message = $("#commant-text").val();
-		if (e.keyCode == 13) {
+		if (e.keyCode == 87) {
 			if(message == ""){
 				alert("Enter Some Text In Textarea");
 				$("#commant-text").val('');

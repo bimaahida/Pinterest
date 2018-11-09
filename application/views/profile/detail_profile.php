@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="col-md-2 col-3">
-        <img src="<?= $user->foto; ?>" class="rounded-circle" style="width: 120px;height: 120px;">
+        <img src="<?php if(explode('/',$user->foto) == 'assets'){ echo base_url().$user->foto;}else{ echo $user->foto;}  ?>" class="rounded-circle" style="width: 120px;height: 120px;">
       </div>
     </div>
     <ul class="nav nav-pills">
@@ -99,17 +99,17 @@
           <a href="#" class="d-flex justify-content-center border" data-image-id="" data-toggle="modal" data-status-form ="" data-target="#craete-image">
             <figure class="figure">
               <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 50px;margin: 79px;"></i>
-              <figcaption class="figure-caption text-center"><p class="font-weight-bold">Create boards.</p></figcaption>
+              <figcaption class="figure-caption text-center"><p class="font-weight-bold">Create pins.</p></figcaption>
             </figure>
           </a>
         </div>
-        <?php foreach($pins as $val){?>
+        <?php if(!empty($pins)){ foreach($pins as $val){?>
           <div class="mb-3 pics animation all 2">
               <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>" data-target="#image-gallery">
                   <img class="img-fluid rounded" src="<?php if(explode('/',$val->url)[0] == 'assets'){ echo base_url().$val->url;}else{ echo $val->url; };?>" alt="<?php if(!empty($val->nama)){echo $val->nama;} ?>">
               </a>
           </div>
-          <?php } ?>
+          <?php } }?>
         </div>
       </div>
     </div>

@@ -56,7 +56,7 @@
               <a class="nav-link" href="#">Folowing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="<?= $this->session->userdata('logged_in')->foto; ?>" class="logo rounded-circle" alt="Pinterest">Bima Ahida</a>
+              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="<?php  if(explode('/',$this->session->userdata('logged_in')->foto    ) == 'assets'){ echo base_url().$this->session->userdata('logged_in')->foto;}else{ echo $this->session->userdata('logged_in')->foto;} ?>" class="logo rounded-circle" alt="Pinterest"><?= $this->session->userdata('logged_in')->nama; ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><i class="fas fa-bell" style="font-size: 25px;"></i></a>

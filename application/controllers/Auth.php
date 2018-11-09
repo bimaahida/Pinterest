@@ -38,6 +38,32 @@ class Auth extends CI_Controller
         $this->session->sess_destroy();
         redirect('auth','refresh');
     }
+    public function register(){
+
+        $config['upload_path']          = './assets/upload/profile/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 1000000000;
+        $config['max_width']            = 10240;
+        $config['max_height']           = 7680;
+        
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('profile')){
+            $error = array('error' => $this->upload->display_errors());
+            var_dump($error);
+        }else{
+            $data = array(
+                'nama' => $this->input->post('name',TRUE),
+                'password' => md5($this->input->post('password',TRUE)),
+                'email' => $this->input->post('email',TRUE),
+                'foto' => 'assets/upload/profile'.$this->upload->data('file_name'),
+                'status' => '1',
+            );
+            $this->User_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('auth'));
+        }
+    }
     public function profile()
     {
         $session_id = $this->session->userdata('logged_in')->id;
