@@ -21,6 +21,11 @@ class Board_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
+    function get_by_user($user){
+        $this->db->where('user_id', $user);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
 
     function get_by_status($user, $params)
     {
@@ -35,7 +40,7 @@ class Board_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
     function get_image_board($params){
-        $this->db->select('image.id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website,board_image.date as dateBoard');
+        $this->db->select('image.id,image.user_id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website,board_image.date as dateBoard');
         $this->db->join('image','image.id = board_image.image_id');
         $this->db->join('kategori','kategori.id = image.kategori_id');
         $this->db->join('user','user.id = image.user_id');

@@ -21,7 +21,16 @@ class User_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
-
+    function get_all_witout($id){
+        $this->db->where('id !=', $id);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+    function login_google($email,$nama){
+        $this->db->where('email', $email);
+        $this->db->where('nama', $nama);
+        return $this->db->get($this->table)->row();
+    }
     // get data by id
     function get_by_id($id)
     {

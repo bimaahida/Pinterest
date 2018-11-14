@@ -53,10 +53,10 @@
               <a class="nav-link" href="<?= base_url().'image'?>">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Folowing</a>
+              <a class="nav-link" href="<?= base_url().'follow'?>">Folowing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="<?php  if(explode('/',$this->session->userdata('logged_in')->foto    ) == 'assets'){ echo base_url().$this->session->userdata('logged_in')->foto;}else{ echo $this->session->userdata('logged_in')->foto;} ?>" class="logo rounded-circle" alt="Pinterest"><?= $this->session->userdata('logged_in')->nama; ?></a>
+              <a class="nav-link" href="<?= base_url().'auth/profile'?>"><img src="<?php  if(explode('/',$this->session->userdata('logged_in')['foto'])[0] == 'assets'){ echo base_url().$this->session->userdata('logged_in')['foto'];}else{ echo $this->session->userdata('logged_in')['foto'];} ?>" class="logo rounded-circle" alt="Pinterest"><?= $this->session->userdata('logged_in')['name']; ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><i class="fas fa-bell" style="font-size: 25px;"></i></a>
@@ -93,7 +93,7 @@
       <div class="modal-header">
         <div class="modal-title">
             <div class="row">
-                <div class="col-1">
+                <div class="col-1" id="menu-edit">
                     <a href="#" id="edit-button"><i class="fas fa-pen"></i></a>
                 </div>
                 <div class="col-1">
@@ -118,7 +118,7 @@
             <div class="col-md-4">
               <img src="" alt="Profile" id="profile" class="img-profile-comment">
               <b id="name-user"></b>
-              <a href="" class="btn btn-danger float-right">Follow</a>
+              <a href="" class="btn btn-danger float-right" id="button-follow">Follow</a>
               <hr>
               <h3 id="title"></h3>
               <p id="description"></p>
@@ -270,5 +270,10 @@
     <script src="<?= base_url()?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url()?>assets/vendor/bootstrap/js/model.js"></script>
     <script src="<?= base_url()?>assets/js/custom.js"></script>
+    <script>
+        var session_id = "<?php echo $this->session->userdata('logged_in')['id'];?>";
+        var board = <?php echo json_encode($this->session->userdata('board')); ?>;
+        // console.log(session_id);
+    </script>
   </body>
 </html>

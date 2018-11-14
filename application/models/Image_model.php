@@ -18,7 +18,7 @@ class Image_model extends CI_Model
     // get all
     function get_all()
     {
-        $this->db->select('image.id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
+        $this->db->select('image.id,image.user_id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
         $this->db->join('kategori','kategori.id = image.kategori_id');
         $this->db->join('user','user.id = image.user_id');
         $this->db->order_by($this->id, $this->order);
@@ -28,17 +28,25 @@ class Image_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->select('image.id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto');
+        $this->db->select('image.id,image.user_id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
         $this->db->join('kategori','kategori.id = image.kategori_id');
         $this->db->join('user','user.id = image.user_id');
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
     function get_by_user($user){
-        $this->db->select('image.id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
+        $this->db->select('image.id,image.user_id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
         $this->db->join('kategori','kategori.id = image.kategori_id');
         $this->db->join('user','user.id = image.user_id');
         $this->db->where('user_id', $user);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+    function get_by_kategori($kategori){
+        $this->db->select('image.id,image.user_id,image.deskripsi,image.nama,url,image.date,kategori.kategori,user.nama as user, user.foto,website');
+        $this->db->join('kategori','kategori.id = image.kategori_id');
+        $this->db->join('user','user.id = image.user_id');
+        $this->db->where('kategori_id', $kategori);
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }

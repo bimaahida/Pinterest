@@ -6,11 +6,11 @@
           <div class="col-12"><h3><?= $user->nama; ?></h3></div>
         </div>
         <div class="row">
-          <div class="col-12"><a href=""><i class="fas fa-upload"></i></a> . <a href="">1 Follower</a> . <a href="">0 Follower</a></div>
+          <div class="col-12"><a href=""><i class="fas fa-upload"></i></a> . <a href=""><?php echo count($follower) ?> Follower</a> . <a href=""><?php echo count($following) ?> Follower</a></div>
         </div>
       </div>
       <div class="col-md-2 col-3">
-        <img src="<?php if(explode('/',$user->foto) == 'assets'){ echo base_url().$user->foto;}else{ echo $user->foto;}  ?>" class="rounded-circle" style="width: 120px;height: 120px;">
+        <img src="<?php if(explode('/',$user->foto)[0] == 'assets'){ echo base_url().$user->foto;}else{ echo $user->foto;}  ?>" class="rounded-circle" style="width: 120px;height: 120px;">
       </div>
     </div>
     <ul class="nav nav-pills">
@@ -105,7 +105,7 @@
         </div>
         <?php if(!empty($pins)){ foreach($pins as $val){?>
           <div class="mb-3 pics animation all 2">
-              <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>" data-target="#image-gallery">
+              <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>"  data-user_id="<?= $val->user_id;?>" data-target="#image-gallery">
                   <img class="img-fluid rounded" src="<?php if(explode('/',$val->url)[0] == 'assets'){ echo base_url().$val->url;}else{ echo $val->url; };?>" alt="<?php if(!empty($val->nama)){echo $val->nama;} ?>">
               </a>
           </div>

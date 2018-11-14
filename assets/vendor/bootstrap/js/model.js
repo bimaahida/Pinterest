@@ -1,6 +1,7 @@
 let modalId = $('#image-gallery');
 
 $(document).ready(function () {
+  
 
     loadGallery(true, 'a.thumbnail');
 
@@ -51,28 +52,67 @@ $(document).ready(function () {
         });
 
       function updateGallery(selector) {
+
+        
         $('#detail').show();
         $('#edit-image').hide();
         $('#komentar-list').empty();
+        $('#board-list').empty();
         $('#status').removeAttr('checked');
+        $('#menu-edit').show();
+        $('#button-follow').hide();
 
         let $sel = selector;
         // console.log($sel);
+        
         current_image = $sel.data('imageid');
+
 
         if($sel.data('statusForm') == 'Checked'){
           $('#status').attr('checked','checked');
         }
 
         if (current_image !== undefined) {
-          $.get("image/get_komentar/"+current_image, function(data) {
-            data_parse = JSON.parse(data);
-            data_parse.forEach(el => {
-              $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span><a href='#'>Like </a></div></div><br>");
-            });
-          }); 
+          var now = window.location.href;
+          var res = now.split('/')
+          // console.log(res);
+          
+          if(res[4] == 'auth'){
+            $.get("../image/get_komentar/"+current_image, function(data) {
+              data_parse = JSON.parse(data);
+              data_parse.forEach(el => {
+                if(session_id != $sel.data('user_id')){
+                  $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
+                }else{
+                  $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a><a class='dropdown-item delete-button' href='image/delete_komentar/"+el.id+"'>Delete</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
+                }
+              });
+            }); 
+          }else{
+            $.get("image/get_komentar/"+current_image, function(data) {
+              data_parse = JSON.parse(data);
+              data_parse.forEach(el => {
+                if(session_id != $sel.data('user_id')){
+                  $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
+                }else{
+                  $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a><a class='dropdown-item delete-button' href='image/delete_komentar/"+el.id+"'>Delete</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
+                }
+              });
+            }); 
+          }
         }
 
+        if(board !== 'undefined'){
+          board.forEach(el =>{
+            $('#board-list').append("<button type='button' class='list-group-item list-group-item-action'><div class='float-left'> <img src='"+el.image[0].url+"' style='width: 30px;height: 30px;'>  "+el.board.nama_board+"</div><div class='float-right'><a class='btn btn-danger' href='image/pin/"+el.board.id+"/"+current_image+"'><i class='fas fa-thumbtack'></i> Save</a></div></button>")
+          })
+        }
+
+
+        if(session_id != $sel.data('user_id')){
+          $('#menu-edit').hide();
+          $('#button-follow').show();
+        }
 
         if($sel.data('website')){
           $('#links-web').show();
@@ -95,7 +135,15 @@ $(document).ready(function () {
         $('#commant-form').attr('action',$sel.data('actioncommant'));
         $('#profile').attr('src',$sel.data('foto'));
         $('#image-gallery-image').attr('src', $sel.data('image'));
-        $('#image-gallery-image2').attr('src', $sel.data('image'));
+        $('#image-gallery-image-pins').attr('src', $sel.data('image'));
+        
+
+
+        $('#email-share').attr('href', "mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://localhost/pinterest/image/read/"+$sel.data('imageId'));
+        $('#fb-share').attr('href', "http://www.facebook.com/sharer.php?u=http://localhost/pinterest/image/read/"+$sel.data('imageId'));
+        $('#google-share').attr('href', "https://plus.google.com/share?url=http://localhost/pinterest/image/read/"+$sel.data('imageId'));
+        $('#twitter-share').attr('href', "https://twitter.com/share?url=http://localhost/pinterest/image/read/"+$sel.data('imageId')+"&amp;text=Share%20SImage%20form%20Pinterest&amp;hashtags=Pinterest");
+
         disableButtons(counter, $sel.data('image-id'));
       }
 

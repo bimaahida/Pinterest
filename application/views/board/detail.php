@@ -30,14 +30,22 @@
         <div class="gallery" id="gallery">
             <?php foreach($image as $val){?>
                 <div class="mb-3 pics animation all 2">
-                    <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>" data-target="#image-gallery">
+                    <a style="cursor: zoom-in;" class="thumbnail board-panel" href="#" data-actionCommant="<?= base_url().'image/komentar_action/'.$val->id?>" data-imageId="<?= $val->id?>" data-user="<?= $val->user?>" data-foto="<?= $val->foto?>" data-description="<?php if(!empty($val->deskripsi)){echo $val->deskripsi;} ?>" data-website="<?= $val->website?>" data-profile="<?= $val->user?>" data-toggle="modal" data-title="<?php if(!empty($val->nama)){echo $val->nama;} ?>" data-image="<?= $val->url;?>"  data-user_id="<?= $val->user_id;?>" data-target="#image-gallery">
                         <img class="img-fluid rounded" src="<?= $val->url;?>" alt="<?php if(!empty($val->nama)){echo $val->nama;} ?>">
                     </a>
+                    <div class="row middle">
+                        <div class="col-12">
+                            <div class="float-left">
+                                <a class="thumbnail btn btn-danger" href="#" data-imageId="<?=$val->id?>" data-toggle="modal" data-title="Another alt text" data-target="#share-image"><i class="fas fa-pen"></i>  Edit</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="update-board" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">

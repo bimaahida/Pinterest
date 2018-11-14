@@ -21,6 +21,15 @@ class Kategori_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
+    function get_by_user($user){
+        $this->db->where('user_id', $user);
+        return $this->db->get('user_kategori')->result();
+    }
+    function get_by_user_and_kategori($user,$kategori){
+        $this->db->where('user_id', $user);
+        $this->db->where('kategori_id', $kategori);
+        return $this->db->get('user_kategori')->row();
+    }
 
     // get data by id
     function get_by_id($id)
@@ -66,6 +75,19 @@ class Kategori_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
+    }
+
+    function insert_user($data)
+    {
+        $this->db->insert('user_kategori', $data);
+        return $this->db->insert_id();
+    }
+
+        // delete data
+    function delete_user($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_kategori');
     }
 
 }

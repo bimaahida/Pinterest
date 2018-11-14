@@ -64,10 +64,10 @@
                             </div>
                             <br>
                             <button class="btn btn-lg btn-danger btn-block text-uppercase" type="submit">Sign in</button>
+                            </form>
                             <hr class="my-4">
-                            <button class="btn btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
+                            <a class="btn btn-google btn-block text-uppercase" href="<?= $url_google ?>" target="_blank" > <i class="fab fa-google mr-2"></i> Sign in with Google</a>
                             <button class="btn btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-                        </form>
                     </div>
                 </div>
             </div>

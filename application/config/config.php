@@ -521,3 +521,11 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/* Google Config */
+$config['google']['client_id']        = '612673643288-dnu7dpl8e3fph3uj9c54jrqnii22o3qc.apps.googleusercontent.com';
+$config['google']['client_secret']    = 'jQQY0Mpa5PgvQEoju75vp1Z9';
+$config['google']['redirect_uri']     = 'http://localhost/pinterest';
+$config['google']['application_name'] = 'Login to Pinterest';
+$config['google']['api_key']          = '';
+$config['google']['scopes']           = array();

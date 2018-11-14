@@ -10,32 +10,72 @@ class Image extends CI_Controller
         parent::__construct();
         $this->load->model('Image_model');
         $this->load->model('Komentar_model');
+        $this->load->model('Board_model');
+        $this->load->model('Board_image_model');
+        $this->load->model('Kategori_model');
     }
 
     public function index()
     {
+        $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
+        $board = array();
+        $imagearray = array();
+        $board_list = $this->Board_model->get_by_user($session_id);
+
+        foreach ($board_list as $key) {
+            $data = array(
+                'board' => $key,
+                'image' => $this->Board_model->get_image_board($key->id),
+            );
+            array_push($board,$data);
+        }
+        $this->session->set_userdata('board', $board);
+
+        $params = $this->Kategori_model->get_by_user($session_id);
+
+        foreach ($params as $key) {
+            $data = $this->Image_model->get_by_kategori($key->kategori_id);
+            $imagearray = (object) array_merge((array) $imagearray, (array) $data);
+        }
+
         $data = array(
-            'image' => $this->Image_model->get_all(),
+            'image' => $imagearray,
         );
+
         $this->render['content']= $this->load->view('image/image_list', $data, TRUE);
         $this->load->view('template', $this->render);
+        // var_dump($data);
     } 
+    public function pin($board,$image){
+        $data = array(
+            'board_id' => $board,
+            'image_id' => $image, 
+        );
+        $this->Board_image_model->insert($data);
+        $this->session->set_flashdata('message', 'Create Record Success');
+        redirect(site_url('board/detail/'.$board));
+
+    }
 
     public function read($id) 
     {
         $row = $this->Image_model->get_by_id($id);
         if ($row) {
             $data = array(
-            'id' => $row->id,
-            'deskripsi' => $row->deskripsi,
-            'nama' => $row->nama,
-            'url' => $row->url,
-            'date' => $row->date,
-            'kategori' => $row->kategori,
-            'user' => $row->user,
-            'foto' => $row->foto,
-	    );
-            $this->load->view('image/image_read', $data);
+                'id' => $row->id,
+                'deskripsi' => $row->deskripsi,
+                'nama' => $row->nama,
+                'url' => $row->url,
+                'date' => $row->date,
+                'kategori' => $row->kategori,
+                'user' => $row->user,
+                'foto' => $row->foto,
+                'website' => $row->website,
+                'komentar' => json_decode($this->Komentar_model->get_by_image($row->id)),
+            );
+        // var_dump($data);
+            $this->render['content']= $this->load->view('image/detail_image', $data, TRUE);
+            $this->load->view('template', $this->render);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('image'));
@@ -44,6 +84,7 @@ class Image extends CI_Controller
     
     public function create_action() 
     {
+        $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
         if(empty($this->input->post('url-web',TRUE))){
             $this->form_validation->set_rules('description-create', 'description-create', 'trim|required');
             $this->form_validation->set_rules('name-create', 'name-create', 'trim|required');
@@ -72,7 +113,7 @@ class Image extends CI_Controller
                         'website' => $this->input->post('website-create',TRUE),
                         'kategori_id' => $this->input->post('kategori-create',TRUE),
                         // 'user_id' => $this->session->userdata('auth'),
-                        'user_id' => $this->session->userdata('logged_in')->id,
+                        'user_id' => $session_id,
                     );
                     $this->Image_model->insert($data);
                     $this->session->set_flashdata('message', 'Create Record Success');
@@ -96,7 +137,7 @@ class Image extends CI_Controller
                     'website' => $this->input->post('url-website',TRUE),
                     'kategori_id' => $this->input->post('url-kategori',TRUE),
                     // 'user_id' => $this->session->userdata('auth'),
-                    'user_id' => $this->session->userdata('logged_in')->id,
+                    'user_id' => $session_id,
                 );
                 $this->Image_model->insert($data);
                 $this->session->set_flashdata('message', 'Create Record Success');
@@ -140,7 +181,7 @@ class Image extends CI_Controller
 
     public function komentar_action($image){
         // $user = $this->session->userdata('auth');
-        $user = $this->session->userdata('logged_in')->id;
+        $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
         $data = array(
             'komentar' => $this->input->post('commant-text',TRUE),
             'user_id' => $user,
@@ -153,6 +194,18 @@ class Image extends CI_Controller
     public function get_komentar($image){
         $data = $this->Komentar_model->get_by_image($image);
         echo $data;
+    }
+    public function delete_komentar($id){
+        $row = $this->Komentar_model->get_by_id($id);
+        
+        if ($row) {
+            $this->Komentar_model->delete($id);
+            $this->session->set_flashdata('message', 'Delete Record Success');
+            redirect(site_url('image'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('image'));
+        }
     }
 
     // public function _rules() 

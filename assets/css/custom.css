@@ -1,10 +1,27 @@
 a {
     color: #34495e;
 }
-.board-panel:hover{
+
+.text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+.middle {
+    opacity: 0;
+    position: fixed;
+    top: 2%;
+    left: 5%;
+    min-width: 100%;
+}
+.board-panel:hover .img-fluid{
     /* background-color: #718093; */
     opacity: 0.5;
     filter: alpha(opacity=50);
+}
+.pics:hover .middle{
+    opacity: 1;
 }
 /* The switch - the box around the slider */
 .switch {
