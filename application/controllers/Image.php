@@ -184,7 +184,7 @@ class Image extends CI_Controller
         $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
         $data = array(
             'komentar' => $this->input->post('commant-text',TRUE),
-            'user_id' => $user,
+            'user_id' => $session_id,
             'image_id' => $image,
         );
         $this->Komentar_model->insert($data);

@@ -66,7 +66,11 @@ class Auth extends CI_Controller
     }
 
     public function kategori(){
-        $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
+        if(!empty($this->session->userdata('logged_in')->id)){
+            $session_id = $this->session->userdata('logged_in')->id;
+        }else{
+            $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
+        }
 
         $kategori_user = $this->Kategori_model->get_by_user($session_id);
 
@@ -173,12 +177,32 @@ class Auth extends CI_Controller
                 'nama' => $this->input->post('name',TRUE),
                 'password' => md5($this->input->post('password',TRUE)),
                 'email' => $this->input->post('email',TRUE),
-                'foto' => 'assets/upload/profile'.$this->upload->data('file_name'),
+                'foto' => 'assets/upload/profile/'.$this->upload->data('file_name'),
                 'status' => '1',
             );
             $this->User_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('auth/kategori'));
+
+            $email = $this->input->post('email',TRUE);
+            $password = md5($this->input->post('password',TRUE));
+
+            $data = $this->User_model->login($email,$password);
+            if($data){
+                $sess = array(
+                    'id' => $data->id,
+                    'name'=> $data->nama,
+                    'email'=> $data->email,
+                    'source'=>'manual',
+                    'foto'=> $data->foto,
+                );
+                $this->session->set_userdata('logged_in', $sess);
+                $this->session->set_flashdata('message', 'Create Record Success');
+                redirect(site_url('auth/kategori'));
+            }else{
+                $this->session->set_userdata('logged_in', $sess);
+                $this->session->set_flashdata('message', 'Create Record Success');
+                redirect(site_url('auth'));
+            }
+            
         }
     }
     public function profile()

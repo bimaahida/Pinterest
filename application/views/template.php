@@ -130,6 +130,10 @@
                     <p>Share feedback, ask a question or give a high five</p>
                     <form id="commant-form" action="" method="post">
                         <textarea class="form-control form-control-xs" name="commant-text" id="commant-text" cols="70" rows="3" placeholder="Comment" required></textarea>
+                        <br>
+                        <div class="float-right">
+                            <button class="btn btn-danger" type="submit">Comment</button>
+                        </div>  
                     </form>
                 </div>
               </div>
@@ -205,9 +209,13 @@
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Kategori:</label>
                     <select name="kategori-create" id="kategori-create" class="form-control">
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        <option value="1">Samurai</option>
+                        <option value="2">Pedang</option>
+                        <option value="3">Anime</option>
+                        <option value="4">Jepang</option>
+                        <option value="5">Logo</option>
+                        <option value="6">Kimono</option>
+                        <option value="7">Nippon</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -233,9 +241,13 @@
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Kategori:</label>
                     <select name="url-kategori" id="url-kategori" class="form-control">
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        <option value="1">Samurai</option>
+                        <option value="2">Pedang</option>
+                        <option value="3">Anime</option>
+                        <option value="4">Jepang</option>
+                        <option value="5">Logo</option>
+                        <option value="6">Kimono</option>
+                        <option value="7">Nippon</option>
                     </select>
                 </div>
                 <div class="form-group">

@@ -31,7 +31,7 @@ class Komentar_model extends CI_Model
 
     function get_by_image($image)
     {
-        $this->db->select('komentar.id,komentar.date,komentar,user.nama,user.foto');
+        $this->db->select('komentar.id,komentar.date,komentar,user.nama,user.foto, user.id as user_id');
         $this->db->join('user','user.id = komentar.user_id');
         $this->db->where('image_id', $image);
         return json_encode($this->db->get($this->table)->result());

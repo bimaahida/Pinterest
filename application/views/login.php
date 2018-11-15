@@ -63,11 +63,12 @@
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <br>
+                            <?php if(!empty($this->session->flashdata('error_message'))){ echo $this->session->flashdata('error_message')['invalid_user'];} ?>
                             <button class="btn btn-lg btn-danger btn-block text-uppercase" type="submit">Sign in</button>
                             </form>
                             <hr class="my-4">
-                            <a class="btn btn-google btn-block text-uppercase" href="<?= $url_google ?>" target="_blank" > <i class="fab fa-google mr-2"></i> Sign in with Google</a>
-                            <button class="btn btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+                            <!-- <a class="btn btn-google btn-block text-uppercase" href="<?= $url_google ?>" target="_blank" > <i class="fab fa-google mr-2"></i> Sign in with Google</a>
+                            <button class="btn btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
                     </div>
                 </div>
             </div>
@@ -100,12 +101,13 @@
                                     <input type="file" id="profile" name="profile" class="form-control" required>
                                 </div>
                                 <br>
+                                <?php if(!empty($this->session->flashdata('error_message'))){ echo $this->session->flashdata('error_message')['invalid_user'];} ?>
                                 <button id="register-back" class="btn btn-lg btn-light btn-block text-uppercase">Back</button>
                                 <button class="btn btn-lg btn-danger btn-block text-uppercase" type="submit">Continue</button>
                             </div>
                             <hr class="my-4">
-                            <button class="btn btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Continue with Google</button>
-                            <button class="btn btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Continue with Facebook</button>
+                            <!-- <button class="btn btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Continue with Google</button>
+                            <button class="btn btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Continue with Facebook</button> -->
                         </form>
                     </div>
                 </div>

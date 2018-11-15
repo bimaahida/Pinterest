@@ -80,8 +80,9 @@ $(document).ready(function () {
           if(res[4] == 'auth'){
             $.get("../image/get_komentar/"+current_image, function(data) {
               data_parse = JSON.parse(data);
+              // console.log(data);
               data_parse.forEach(el => {
-                if(session_id != $sel.data('user_id')){
+                if(session_id != el.user_id){
                   $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
                 }else{
                   $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a><a class='dropdown-item delete-button' href='image/delete_komentar/"+el.id+"'>Delete</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
@@ -92,7 +93,7 @@ $(document).ready(function () {
             $.get("image/get_komentar/"+current_image, function(data) {
               data_parse = JSON.parse(data);
               data_parse.forEach(el => {
-                if(session_id != $sel.data('user_id')){
+                if(session_id != el.user_id){
                   $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
                 }else{
                   $('#komentar-list').append("<div class='row'><div class='col-md-9'><img src='"+el.foto+"' alt='Profile' class='img-profile-comment'><b>"+el.nama+"</b></div><div class='col-md-3'><div class='dropdown show'><a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item' href='#'>Report</a><a class='dropdown-item delete-button' href='image/delete_komentar/"+el.id+"'>Delete</a></div></div></div></div><div class='row'><div class='col-md-10 offset-md-1'>"+el.komentar+"</div></div><div class='row'><div class='col-md-12 offset-md-1'><span id='date'>"+el.date+"</span></div></div><br>");
@@ -104,7 +105,13 @@ $(document).ready(function () {
 
         if(board !== 'undefined'){
           board.forEach(el =>{
-            $('#board-list').append("<button type='button' class='list-group-item list-group-item-action'><div class='float-left'> <img src='"+el.image[0].url+"' style='width: 30px;height: 30px;'>  "+el.board.nama_board+"</div><div class='float-right'><a class='btn btn-danger' href='image/pin/"+el.board.id+"/"+current_image+"'><i class='fas fa-thumbtack'></i> Save</a></div></button>")
+            
+            if(el.image.length == 0){
+              var image = "http://www.trustvets.com/images/NoImageAvailable.png";
+            }else{
+              var image = el.image[0].url;
+            }
+            $('#board-list').append("<button type='button' class='list-group-item list-group-item-action'><div class='float-left'> <img src='"+image+"' style='width: 30px;height: 30px;'>  "+el.board.nama_board+"</div><div class='float-right'><a class='btn btn-danger' href='image/pin/"+el.board.id+"/"+current_image+"'><i class='fas fa-thumbtack'></i> Save</a></div></button>")
           })
         }
 

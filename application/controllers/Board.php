@@ -25,6 +25,7 @@ class Board extends CI_Controller
     
     public function create_action() 
     {
+        $session_id = json_decode(json_encode($this->session->userdata('logged_in'),true))->id;
         $this->form_validation->set_rules('name', 'name', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -38,7 +39,7 @@ class Board extends CI_Controller
             $data = array(
                 'nama_board' => $this->input->post('name',TRUE),
                 'status' => $status,
-                'user_id' => 1,
+                'user_id' => $session_id,
             );
             $this->Board_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
